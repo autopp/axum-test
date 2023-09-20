@@ -1,4 +1,5 @@
 use ::std::net::IpAddr;
+use crate::TestServerBuilder;
 
 /// This is for customising the [`TestServer`](crate::TestServer) on construction.
 ///
@@ -98,5 +99,21 @@ impl Default for TestServerConfig {
             restrict_requests_with_http_schema: false,
             default_content_type: None,
         }
+    }
+}
+
+impl From<TestServerConfig> for TestServerBuilder {
+    fn from(config: TestServerConfig) -> Self {
+        let mut builder = TestServerBuilder::new();
+
+        if let Some(port) = config.port {
+            builder = builder.set_port(port);
+        }
+
+        if let Some(ip) = config.ip {
+            builder = builder.set_ip(ip);
+        }
+
+        builder
     }
 }

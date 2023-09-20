@@ -23,6 +23,7 @@ use crate::TestServerConfig;
 
 mod server_shared_state;
 pub(crate) use self::server_shared_state::*;
+use crate::TestServerBuilder;
 
 ///
 /// The `TestServer` runs your application,
@@ -99,6 +100,13 @@ impl TestServer {
     ///
     /// See the [`TestServerConfig`] for more information on each configuration setting.
     pub fn new_with_config<A>(app: A, config: TestServerConfig) -> Result<Self>
+    where
+        A: IntoTestServerThread,
+    {
+        self.new_with_builder(app, config.into())
+    }
+
+    pub(crate) fn new_with_builder<A>(app: A, builder: TestServerBuilder) -> Result<Self>
     where
         A: IntoTestServerThread,
     {

@@ -193,6 +193,9 @@ pub use self::into_test_server_thread::*;
 mod test_server;
 pub use self::test_server::*;
 
+mod test_server_builder;
+pub use self::test_server_builder::*;
+
 mod test_server_config;
 pub use self::test_server_config::*;
 
